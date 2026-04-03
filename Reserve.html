@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Vista | Reserve Your Stay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --resort-red: #e61e2a;
+            --resort-black: #080808;
+            --resort-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-line: rgba(255, 255, 255, 0.1);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--resort-black);
+            color: var(--resort-white);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER (Matches Your Branding) --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 4%;
+            background: var(--resort-white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .custom-logo {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--resort-black);
+            text-transform: uppercase;
+        }
+
+        .logo-text span { color: var(--resort-red); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--resort-black);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover { color: var(--resort-red); }
+
+        .login-btn {
+            background: var(--resort-black);
+            color: var(--resort-white) !important;
+            padding: 10px 25px;
+            border-radius: 50px;
+        }
+
+        /* --- HERO SECTION (SAKTONG BIG) --- */
+        .reserve-hero {
+            padding: 100px 6% 60px;
+            text-align: left;
+        }
+
+        .reserve-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .reserve-hero h1 span {
+            color: var(--resort-red);
+            display: block;
+            font-size: 0.3em; 
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* --- SECTION DIVIDERS --- */
+        .section-divider {
+            border-bottom: 1px solid var(--border-line);
+            margin: 0 6%;
+        }
+
+        .section-title {
+            padding: 60px 6% 25px;
+            font-size: 1rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--resort-red);
+            font-weight: 800;
+        }
+
+        /* --- GRID SYSTEM --- */
+        .showcase-container {
+            padding: 0 6% 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .item-card {
+            background: var(--glass);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .item-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--resort-red);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: brightness(0.6) grayscale(20%);
+            transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .item-card:hover .item-img {
+            filter: brightness(1) grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .item-info {
+            padding: 30px;
+        }
+
+        .item-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .price-tag {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--resort-white);
+            margin-bottom: 25px;
+        }
+
+        .price-tag span {
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .action-btn {
+            display: block;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--resort-red);
+            color: var(--resort-white);
+            text-align: center;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--resort-red);
+            box-shadow: 0 10px 20px rgba(230, 30, 42, 0.3);
+        }
+
+        /* --- FORM STYLING --- */
+        .reservation-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--resort-red);
+            letter-spacing: 1px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-line);
+            padding: 12px;
+            color: white;
+            border-radius: 4px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--resort-red);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group input[type="date"] {
+            color-scheme: dark;
+        }
+
+        @media (max-width: 768px) {
+            .reservation-form { grid-template-columns: 1fr; }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 60px 6%;
+            border-top: 1px solid var(--border-line);
+            color: #444;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="Home.html" class="logo-area">
+            <img src="LunaVLogo.png" alt="Logo" class="custom-logo">
+            <div class="logo-text">LUNA<span>VISTA</span></div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="Home.html#gallery-section">GALLERY</a></li>
+                <li><a href="Home.html#about-section">ABOUT US</a></li>
+                <li><a href="reserve.html" style="color: var(--resort-red);">RESERVE</a></li>
+                <li><a href="login.html" class="login-btn">LOG IN</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="reserve-hero">
+        <h1><span>SECURE YOUR ESCAPE</span> RESERVE WITH <br> LUNA VISTA</h1>
+    </section>
+
+    <div class="section-divider"></div>
+    <h2 class="section-title">Rooms: Luxury & Common</h2>
+    <main class="showcase-container">
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800" class="item-img" alt="Premium Room">
+            <div class="item-info">
+                <h3>Premium Room</h3>
+                <p class="price-tag">₱125,000 <span>/ Night</span></p>
+                <a href="#contact-section" class="action-btn">Check Availability</a>
+            </div>
+        </div>
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800" class="item-img" alt="Modern Room">
+            <div class="item-info">
+                <h3>Modern Room</h3>
+                <p class="price-tag">₱90,000 <span>/ Night</span></p>
+                <a href="#contact-section" class="action-btn">Check Availability</a>
+            </div>
+        </div>
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800" class="item-img" alt="Economic Room">
+            <div class="item-info">
+                <h3>Economic Room</h3>
+                <p class="price-tag">₱30,000 <span>/ Night</span></p>
+                <a href="#contact-section" class="action-btn">Check Availability</a>
+            </div>
+        </div>
+    </main>
+
+    <div class="section-divider"></div>
+    <h2 class="section-title">Experience: Pools & Dining</h2>
+    <section class="showcase-container">
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800" class="item-img" alt="Pool">
+            <div class="item-info">
+                <h3>Infinity Azure Pool</h3>
+                <p class="price-tag">Complimentary</p>
+                <a href="#" class="action-btn">View Access</a>
+            </div>
+        </div>
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800" class="item-img" alt="Dining">
+            <div class="item-info">
+                <h3>Crimson Dining & Bar</h3>
+                <p class="price-tag">Elite Cuisine</p>
+                <a href="#contact-section" class="action-btn">Reserve Table</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+    <h2 class="section-title">Wellness: Saunas & Spas</h2>
+    <section class="showcase-container">
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800" class="item-img" alt="Sauna">
+            <div class="item-info">
+                <h3>Cedar Steam Sauna</h3>
+                <p class="price-tag">₱2,500 <span>/ Session</span></p>
+                <a href="#contact-section" class="action-btn">Book Session</a>
+            </div>
+        </div>
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1544124499-58912cbddaad?auto=format&fit=crop&w=800" class="item-img" alt="Spa">
+            <div class="item-info">
+                <h3>Luna Zen Spa</h3>
+                <p class="price-tag">₱4,000 <span>/ Massage</span></p>
+                <a href="#contact-section" class="action-btn">View Services</a>
+            </div>
+        </div>
+        <div class="item-card">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800" class="item-img" alt="Gym">
+            <div class="item-info">
+                <h3>Elite Fitness Gym</h3>
+                <p class="price-tag">24/7 Access</p>
+                <a href="#contact-section" class="action-btn">Get Pass</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+    <h2 class="section-title" id="contact-section">Reservation & Inquiry</h2>
+    
+    <section class="showcase-container">
+        <div class="item-card" style="grid-column: 1 / -1; background: rgba(230, 30, 42, 0.03); border: 1px solid rgba(230, 30, 42, 0.2);">
+            <div class="item-info" style="max-width: 900px; margin: 0 auto;">
+                <p style="text-align: center; margin-bottom: 35px; color: #888; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;"> 
+                    Concierge remains at your service. Please provide your details below.
+                </p>
+                
+                <form class="reservation-form" action="#">
+                    <div class="form-group">
+                        <label>FULL NAME</label>
+                        <input type="text" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>EMAIL ADDRESS</label>
+                        <input type="email" placeholder="example@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ACCOMMODATION TYPE</label>
+                        <select required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option>Premium Room</option>
+                            <option>Modern Room</option>
+                            <option>Economic Room</option>
+                            <option>Crimson Dining (Table Only)</option>
+                            <option>Wellness/Spa Package</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>TOTAL GUESTS</label>
+                        <input type="number" min="1" max="15" placeholder="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CHECK-IN DATE</label>
+                        <input type="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CHECK-OUT DATE</label>
+                        <input type="date" required>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>SPECIAL INSTRUCTIONS / REQUESTS</label>
+                        <textarea rows="4" placeholder="Dietary requirements, late check-in, etc." style="resize: none;"></textarea>
+                    </div>
+
+                    <button type="submit" class="action-btn" style="grid-column: 1 / -1; cursor: pointer; margin-top: 15px;">
+                        Send Reservation Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        LUNA VISTA &copy; 2026 | Where Paradise Meets Red.
+    </footer>
+
+</body>
+</html>
